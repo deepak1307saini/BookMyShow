@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.example.BookMyShowSpringBootApplication.dto;
 
@@ -21,28 +21,27 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 
 public class MovieDto {
+    private long id;
 
-	private long id;
+    @NotBlank
+    private String name;
 
-	@NotBlank
-	private String name;
+    @NotBlank
+    private String description;
 
-	@NotBlank
-	private String description;
+    @NotBlank
+    private Language language;
 
-	@NotBlank
-	private Language language;
+    @NotBlank
+    private CertificateType certificateType;
 
-	@NotBlank
-	private CertificateType certificateType;
+    @NotBlank
+    private LocalDate releaseDate;
 
-	@NotBlank
-	private LocalDate releaseDate;
+    @NotBlank
+    private Genre genre;
 
-	@NotBlank
-	private Genre genre;
-
-	@NotEmpty
-	private List<String> actorNames;
+    @NotEmpty
+    private List<String> actorNames;
 
 }

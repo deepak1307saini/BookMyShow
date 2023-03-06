@@ -108,7 +108,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseDto forgetPassword(String email, String applicationUrl) {
         User user = userRepository.findByEmail(email);
-        VerificationDto res = new VerificationDto();
         if (user == null) {
             return new ResponseDto(false, "email not registered!");
         }

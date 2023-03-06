@@ -1,6 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.controller;
 
-import com.example.BookMyShowSpringBootApplication.dto.DeleteResponseDto;
+import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.User;
 import com.example.BookMyShowSpringBootApplication.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,9 @@ public class UserController {
     public User getUserById(@PathVariable("id") Long id){
         return userService.getUserById(id);
     }
+
     @DeleteMapping("user/{id}")
-    public DeleteResponseDto deleteUser(@PathVariable Long id){
+    public ResponseDto deleteUser(@PathVariable Long id){
         return userService.deleteUser(id);
     }
 

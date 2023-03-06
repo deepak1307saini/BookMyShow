@@ -1,6 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
-import com.example.BookMyShowSpringBootApplication.dto.DeleteResponseDto;
+import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.User;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
 import com.example.BookMyShowSpringBootApplication.service.UserService;
@@ -38,9 +38,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public DeleteResponseDto deleteUser(Long id) {
+    public ResponseDto deleteUser(Long id) {
         userRepository.deleteById(id);
-        return new DeleteResponseDto(true,"deleted user!");
+        return new ResponseDto(true,"deleted user!");
     }
 
 }

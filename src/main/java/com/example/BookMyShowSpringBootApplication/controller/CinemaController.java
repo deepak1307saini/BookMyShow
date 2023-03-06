@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.controller;
 import com.example.BookMyShowSpringBootApplication.dto.CinemaDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Cinema;
+import com.example.BookMyShowSpringBootApplication.service.CinemaService;
 import com.example.BookMyShowSpringBootApplication.service.impl.CinemaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,19 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/cinemas")
 public class CinemaController {
-
-    @Autowired
-    private CinemaService cinemaService;
-
-    @PostMapping("/{cityId}/addCinema")
-    public String addCinema(@RequestBody CinemaDto cinemaDto, @PathVariable Long cityId) {
-        return cinemaService.addCinema(cinemaDto, cityId);
-    }
-
-    @GetMapping("/{cityId}/getCinemas")
-    public List<Cinema> getCinemas(@PathVariable Long cityId) {
-        return cinemaService.getCinemas(cityId);
-    }
 
     @Autowired
     CinemaServiceImpl cinemaService;

@@ -12,39 +12,35 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-
-
+@RequestMapping("/cinemas/{cinemaId}/cinemaHalls")
 public class CinemaHallController {
-    @RequestMapping("/cinemas/{cinemaId}/cinemaHalls")
-    public class CinemaHallController {
-        @Autowired
-        CinemaHallService cinemaHallService;
+    @Autowired
+    CinemaHallService cinemaHallService;
 
-        @GetMapping
-        public List<CinemaHall> getAllCinemaHalls(@PathVariable Long cinemaId) {
-            return cinemaHallService.getAllCinemaHalls(cinemaId);
-        }
-
-        @GetMapping("/{name}")
-        public CinemaHall getCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
-            return cinemaHallService.getCinemaHall(cinemaId, name);
-        }
-
-        @PostMapping
-        public ResponseDto addCinemaHall(@PathVariable Long cinemaId,
-                                         @Valid @RequestBody CinemaHallDto cinemaHallDto) {
-            return cinemaHallService.addCinemaHall(cinemaId, cinemaHallDto);
-        }
-
-
-        @PutMapping("/{name}")
-        public ResponseDto updateCinemaHall(@PathVariable Long cinemaId, @PathVariable String name,
-                                            @Valid @RequestBody CinemaHallDto cinemaHallDto) {
-            return cinemaHallService.updateCinemaHall(cinemaId, name, cinemaHallDto);
-        }
-
-        @DeleteMapping("/{name}")
-        public ResponseDto deleteCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
-            return cinemaHallService.deleteCinemaHall(cinemaId, name);
-        }
+    @GetMapping
+    public List<CinemaHall> getAllCinemaHalls(@PathVariable Long cinemaId) {
+        return cinemaHallService.getAllCinemaHalls(cinemaId);
     }
+
+    @GetMapping("/{name}")
+    public CinemaHall getCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
+        return cinemaHallService.getCinemaHall(cinemaId, name);
+    }
+
+    @PostMapping
+    public ResponseDto addCinemaHall(@PathVariable Long cinemaId,
+                                     @Valid @RequestBody CinemaHallDto cinemaHallDto) {
+        return cinemaHallService.addCinemaHall(cinemaId, cinemaHallDto);
+    }
+
+    @PutMapping("/{name}")
+    public ResponseDto updateCinemaHall(@PathVariable Long cinemaId, @PathVariable String name,
+                                        @Valid @RequestBody CinemaHallDto cinemaHallDto) {
+        return cinemaHallService.updateCinemaHall(cinemaId, name, cinemaHallDto);
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseDto deleteCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
+        return cinemaHallService.deleteCinemaHall(cinemaId, name);
+    }
+}

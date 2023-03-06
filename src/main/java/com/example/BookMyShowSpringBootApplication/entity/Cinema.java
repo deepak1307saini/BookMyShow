@@ -20,11 +20,14 @@ public class Cinema {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(nullable = false)
-    @Length(min = 3,max = 15)
+    @Length(min = 3, max = 15)
     private String name;
+
+    @Column(nullable = false)
+    private String address;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "city_id", nullable = false)

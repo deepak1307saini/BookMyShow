@@ -1,6 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.service;
 
-import com.example.BookMyShowSpringBootApplication.dto.DeleteResponseDto;
+import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.User;
 
 import java.util.List;
@@ -14,5 +14,5 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
-    DeleteResponseDto deleteUser(Long id);
+    ResponseDto deleteUser(Long id);
 }

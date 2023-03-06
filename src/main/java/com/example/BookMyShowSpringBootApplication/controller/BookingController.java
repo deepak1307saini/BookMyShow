@@ -1,6 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.controller;
 
--import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestController;
 import com.example.BookMyShowSpringBootApplication.dto.BookingDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Booking;

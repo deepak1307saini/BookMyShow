@@ -47,7 +47,7 @@ public class ShowHelper {
 
         List<Show> showList = cinemaHall.getShows();
 
-        for (int i = 0; i < showList.size(); i) {
+        for (int i = 0; i < showList.size(); i++) {
             if (showList.get(i).getStartDateTime().after(showDto.getEndDateTime()) || showList.get(i).getEndDateTime().before(showDto.getStartDateTime())) {
                 continue;
             } else {
@@ -111,7 +111,7 @@ public class ShowHelper {
 
         List<Show> showList = cinemaHall.getShows();
 
-        for (int i = 0; i < showList.size(); i) {
+        for (int i = 0; i < showList.size(); i++) {
             if (showList.get(i).getStartDateTime().after(showDto.getEndDateTime()) || showList.get(i).getEndDateTime().before(showDto.getStartDateTime()) || showId.equals(showList.get(i).getId())) {
                 continue;
             } else {

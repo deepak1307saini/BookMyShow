@@ -19,22 +19,18 @@ import lombok.*;
 @AllArgsConstructor
 
 public class ShowDto {
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    private Date startDateTime;
 
-	@NotNull @Future
-	@JsonFormat(pattern = "dd-MM-yyyy")
-	private Date date;
+    @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    private Date endDateTime;
 
-	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-	private Date startTime;
+    @NotNull
+    private Long movieId;
 
-	@NotNull
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-	private Date endTime;
-
-	@NotNull
-	private Integer movieId;
-
-	@NotNull @Positive
-	private Integer price;
+    @NotNull
+    @Positive
+    private Integer price;
 }

@@ -13,17 +13,11 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 
-public class ShowSeatsDto {
+public class ShowSeatDto {
 
 	private String seatNo;
 	private SeatType seatType;
 	private SeatStatus seatStatus;
 	private int price;
-//
-//	public ShowSeatDTO(ShowSeat showSeat) {
-//		this.seatNo = showSeat.getAudiSeat().getSeatNo();
-//		this.seatType = showSeat.getAudiSeat().getSeatType();
-//		this.seatStatus = showSeat.getSeatStatus();
-//		this.price = showSeat.getPrice();
-//	}
+
 }

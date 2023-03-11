@@ -1,9 +1,8 @@
 package com.example.BookMyShowSpringBootApplication.controller;
 
 import com.example.BookMyShowSpringBootApplication.dto.CinemaDto;
+import com.example.BookMyShowSpringBootApplication.dto.CinemaResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
-import com.example.BookMyShowSpringBootApplication.entity.Cinema;
-import com.example.BookMyShowSpringBootApplication.service.CinemaService;
 import com.example.BookMyShowSpringBootApplication.service.impl.CinemaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +17,14 @@ public class CinemaController {
     @Autowired
     CinemaServiceImpl cinemaService;
 
+
     @GetMapping
-    public List<Cinema> getAllCinemas() {
+    public List<CinemaResponseDto> getAllCinemas() {
         return cinemaService.getAllCinemas();
     }
 
     @GetMapping("/{cinemaId}")
-    public Cinema getCinema(@PathVariable("cinemaId") Long cinemaId) {
+    public CinemaResponseDto getCinema(@PathVariable("cinemaId") Long cinemaId) {
         return cinemaService.getCinema(cinemaId);
     }
 

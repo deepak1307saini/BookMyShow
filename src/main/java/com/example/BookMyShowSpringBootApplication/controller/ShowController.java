@@ -2,10 +2,9 @@ package com.example.BookMyShowSpringBootApplication.controller;
 
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowDto;
-import com.example.BookMyShowSpringBootApplication.entity.Show;
+import com.example.BookMyShowSpringBootApplication.dto.ShowResponseDto;
 import com.example.BookMyShowSpringBootApplication.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,12 +19,12 @@ public class ShowController {
     ShowService showService;
 
     @GetMapping
-    public List<Show> getAllShows(@PathVariable Long cinemaId, @PathVariable String cinemaHallName) {
+    public List<ShowResponseDto> getAllShows(@PathVariable Long cinemaId, @PathVariable String cinemaHallName) {
         return showService.getAllShows(cinemaId, cinemaHallName);
     }
 
     @GetMapping("/{showId}")
-    public Show getShow(@PathVariable Long cinemaId, @PathVariable String cinemaHallName, @PathVariable Long showId) {
+    public ShowResponseDto getShow(@PathVariable Long cinemaId, @PathVariable String cinemaHallName, @PathVariable Long showId) {
         return showService.getShow(cinemaId, cinemaHallName, showId);
     }
 

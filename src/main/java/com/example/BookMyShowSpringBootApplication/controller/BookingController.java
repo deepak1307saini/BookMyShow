@@ -1,9 +1,8 @@
 package com.example.BookMyShowSpringBootApplication.controller;
 
-import org.springframework.web.bind.annotation.RestController;
 import com.example.BookMyShowSpringBootApplication.dto.BookingDto;
+import com.example.BookMyShowSpringBootApplication.dto.BookingResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
-import com.example.BookMyShowSpringBootApplication.entity.Booking;
 import com.example.BookMyShowSpringBootApplication.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +18,12 @@ public class BookingController {
     BookingService bookingService;
 
     @GetMapping("/bookings")
-    List<Booking> getAllBookings(@PathVariable Long userId) {
+    List<BookingResponseDto> getAllBookings(@PathVariable Long userId) {
         return bookingService.getAllBookings(userId);
     }
 
     @GetMapping("/bookings/{bookingId}")
-    Booking getBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
+    BookingResponseDto getBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
         return bookingService.getBooking(userId, bookingId);
     }
 

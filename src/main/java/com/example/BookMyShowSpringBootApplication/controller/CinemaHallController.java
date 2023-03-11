@@ -2,8 +2,8 @@ package com.example.BookMyShowSpringBootApplication.controller;
 
 
 import com.example.BookMyShowSpringBootApplication.dto.CinemaHallDto;
+import com.example.BookMyShowSpringBootApplication.dto.CinemaHallResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
-import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
 import com.example.BookMyShowSpringBootApplication.service.CinemaHallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +18,12 @@ public class CinemaHallController {
     CinemaHallService cinemaHallService;
 
     @GetMapping
-    public List<CinemaHall> getAllCinemaHalls(@PathVariable Long cinemaId) {
+    public List<CinemaHallResponseDto> getAllCinemaHalls(@PathVariable Long cinemaId) {
         return cinemaHallService.getAllCinemaHalls(cinemaId);
     }
 
     @GetMapping("/{name}")
-    public CinemaHall getCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
+    public CinemaHallResponseDto getCinemaHall(@PathVariable Long cinemaId, @PathVariable String name) {
         return cinemaHallService.getCinemaHall(cinemaId, name);
     }
 

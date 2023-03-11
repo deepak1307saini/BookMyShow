@@ -8,7 +8,6 @@ import com.example.BookMyShowSpringBootApplication.service.EmailService;
 import com.example.BookMyShowSpringBootApplication.service.UserService;
 import com.example.BookMyShowSpringBootApplication.utility.CurrentTimeDate;
 import com.example.BookMyShowSpringBootApplication.utility.GetEmailDetailInstance;
-
 import com.example.BookMyShowSpringBootApplication.utility.UserAdapter;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,5 +129,7 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(verificationRequestDto.getNewPassword()));
         userRepository.save(user);
         return new ResponseDto(true, "password changed successfully");
+
+
     }
 }

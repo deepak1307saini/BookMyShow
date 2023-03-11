@@ -1,6 +1,7 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.BookingDto;
+import com.example.BookMyShowSpringBootApplication.dto.BookingResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Booking;
 import com.example.BookMyShowSpringBootApplication.entity.Show;
@@ -32,16 +33,16 @@ public class BookingServiceImpl implements BookingService {
     BookingHelper bookingHelper;
 
     @Override
-    public List<Booking> getAllBookings(Long userId) {
+    public List<BookingResponseDto> getAllBookings(Long userId) {
         User user = bookingHelper.getUser(userId);
-        return bookingRepository.findByUser(user);
+        return bookingRepository.findByUser(user).stream().map(booking -> new BookingResponseDto(booking)).collect(Collectors.toList());
     }
 
     @Override
-    public Booking getBooking(Long userId, Long bookingId) {
+    public BookingResponseDto getBooking(Long userId, Long bookingId) {
         bookingHelper.checkBooking(userId, bookingId);
         Booking booking = bookingRepository.findById(bookingId).get();
-        return booking;
+        return new BookingResponseDto(booking);
     }
 
     @Override

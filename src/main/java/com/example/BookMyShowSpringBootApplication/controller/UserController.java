@@ -15,26 +15,27 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users")
-    public List<User> getUser(){
+    public List<User> getUser() {
         return userService.getUser();
     }
 
     @GetMapping("/user")
-    public User getUserByUsername(@RequestParam("username") String username){
+    public User getUserByUsername(@RequestParam("username") String username) {
         return userService.getUserByUsername(username);
     }
+
     @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable("id") Long id){
+    public User getUserById(@PathVariable("id") Long id) {
         return userService.getUserById(id);
     }
 
     @DeleteMapping("user/{id}")
-    public ResponseDto deleteUser(@PathVariable Long id){
+    public ResponseDto deleteUser(@PathVariable Long id) {
         return userService.deleteUser(id);
     }
 
-        @GetMapping
-    public User getUserByEmail(@RequestParam("email") String email){
+    @GetMapping
+    public User getUserByEmail(@RequestParam("email") String email) {
         return userService.getUserByEmail(email);
     }
 }

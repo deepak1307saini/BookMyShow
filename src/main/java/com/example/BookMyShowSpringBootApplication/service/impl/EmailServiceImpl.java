@@ -1,9 +1,5 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
-import java.io.File;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
 import com.example.BookMyShowSpringBootApplication.entity.EmailDetails;
 import com.example.BookMyShowSpringBootApplication.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +9,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
 
 // Annotation
 @Service

@@ -2,6 +2,7 @@ package com.example.BookMyShowSpringBootApplication.helper;
 
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowDto;
+import com.example.BookMyShowSpringBootApplication.dto.ShowResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.*;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
 import com.example.BookMyShowSpringBootApplication.repository.ShowRepository;
@@ -132,4 +133,7 @@ public class ShowHelper {
         checkShow(cinemaId, cinemaHallName, showId);
     }
 
+    public List<ShowResponseDto> showsToShowDto(List<Show> shows){
+        return shows.stream().map(show -> new ShowResponseDto(show)).collect(Collectors.toList());
+    }
 }

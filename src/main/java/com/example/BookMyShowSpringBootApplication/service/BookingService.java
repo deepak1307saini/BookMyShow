@@ -1,15 +1,16 @@
 package com.example.BookMyShowSpringBootApplication.service;
 
 import com.example.BookMyShowSpringBootApplication.dto.BookingDto;
+import com.example.BookMyShowSpringBootApplication.dto.BookingResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Booking;
 
 import java.util.List;
 
 public interface BookingService {
-    List<Booking> getAllBookings(Long userId);
+    List<BookingResponseDto> getAllBookings(Long userId);
 
-    Booking getBooking(Long userId, Long bookingId);
+    BookingResponseDto getBooking(Long userId, Long bookingId);
 
     ResponseDto bookShow(Long userId, Long movieId, Long showId, BookingDto bookingDto);
 

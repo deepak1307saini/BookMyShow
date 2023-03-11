@@ -1,6 +1,7 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.CinemaHallSeatDto;
+import com.example.BookMyShowSpringBootApplication.dto.CinemaHallSeatResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHallSeat;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -24,18 +26,18 @@ public class CinemaHallSeatServiceImpl implements  CinemaHallSeatService {
     CinemaHallSeatHelper cinemaHallSeatHelper;
 
     @Override
-    public List<CinemaHallSeat> getAllCinemaHallSeats(Long cinemaId, String cinemaHallName) {
+    public List<CinemaHallSeatResponseDto> getAllCinemaHallSeats(Long cinemaId, String cinemaHallName) {
         cinemaHallSeatHelper.checkCinemaHall(cinemaId, cinemaHallName);
 
         CinemaHall cinemaHall = cinemaHallSeatHelper.getCinemaHall(cinemaId, cinemaHallName);
-        return cinemaHallSeatRepository.findByCinemaHall(cinemaHall);
+        return cinemaHallSeatRepository.findByCinemaHall(cinemaHall).stream().map(cinemaHallSeat -> new CinemaHallSeatResponseDto(cinemaHallSeat)).collect(Collectors.toList());
     }
 
     @Override
-    public CinemaHallSeat getCinemaHallSeat(Long cinemaId, String cinemaHallName, String seatNo) {
+    public CinemaHallSeatResponseDto getCinemaHallSeat(Long cinemaId, String cinemaHallName, String seatNo) {
         cinemaHallSeatHelper.checkCinemaHallSeat(cinemaId, cinemaHallName, seatNo);
         CinemaHallSeat cinemaHallSeat = cinemaHallSeatHelper.getCinemaHallSeat(cinemaId, cinemaHallName, seatNo);
-        return cinemaHallSeat;
+        return new CinemaHallSeatResponseDto(cinemaHallSeat);
     }
 
     @Override

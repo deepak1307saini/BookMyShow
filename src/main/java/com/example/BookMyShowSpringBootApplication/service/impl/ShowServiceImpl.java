@@ -2,6 +2,7 @@ package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowDto;
+import com.example.BookMyShowSpringBootApplication.dto.ShowResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
 import com.example.BookMyShowSpringBootApplication.entity.Movie;
 import com.example.BookMyShowSpringBootApplication.entity.Show;
@@ -29,10 +30,10 @@ public class ShowServiceImpl implements  ShowService {
     ShowSeatRepository showSeatRepository;
 
     @Override
-    public List<Show> getAllShows(Long cinemaId, String cinemaHallName) {
+    public List<ShowResponseDto> getAllShows(Long cinemaId, String cinemaHallName) {
         showHelper.checkCinemaHall(cinemaId, cinemaHallName);
         CinemaHall cinemaHall = showHelper.getCinemaHall(cinemaId, cinemaHallName);
-        return showRepository.findByCinemaHall(cinemaHall);
+        return showHelper.showsToShowDto(showRepository.findByCinemaHall(cinemaHall));
     }
 
     @Override
@@ -44,11 +45,11 @@ public class ShowServiceImpl implements  ShowService {
     }
 
     @Override
-    public List<Show> getAllShows(Long movieId) {
+    public List<ShowResponseDto> getAllShows(Long movieId) {
         showHelper.checkMovie(movieId);
 
         Movie movie = showHelper.getMovie(movieId);
-        return showRepository.findByMovie(movie);
+        return showHelper.showsToShowDto(showRepository.findByMovie(movie));
     }
 
     @Override
@@ -81,10 +82,10 @@ public class ShowServiceImpl implements  ShowService {
     }
 
     @Override
-    public Show getShow(Long cinemaId, String cinemaHallName, Long showId) {
+    public ShowResponseDto getShow(Long cinemaId, String cinemaHallName, Long showId) {
         showHelper.checkShow(cinemaId, cinemaHallName, showId);
         Show show = showHelper.getShow(showId);
-        return show;
+        return new ShowResponseDto(show);
     }
 
 

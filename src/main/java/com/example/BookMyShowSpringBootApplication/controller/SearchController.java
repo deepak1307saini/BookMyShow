@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/search/{keyword}")
-public class SearchContoller {
+public class SearchController {
     @Autowired
     SearchService searchService;
 
     @GetMapping
-    public List<Movie> searchMovie(@PathVariable String keyword){
+    public List<Movie> searchMovie(@PathVariable String keyword) {
         return searchService.searchMovie(keyword);
     }
 }

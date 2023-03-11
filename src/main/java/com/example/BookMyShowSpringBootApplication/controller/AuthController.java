@@ -47,10 +47,10 @@ public class AuthController {
     }
 
     public String getApplicationUrl(HttpServletRequest request) {
-        return "http://"+
-        request.getServerName()+
-        ":"+
-        request.getServerPort()+
-        request.getContextPath();
+        return "http://" +
+                request.getServerName() +
+                ":" +
+                request.getServerPort() +
+                request.getContextPath();
     }
 }

@@ -1,6 +1,7 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.CinemaDto;
+import com.example.BookMyShowSpringBootApplication.dto.CinemaResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Cinema;
 import com.example.BookMyShowSpringBootApplication.helper.CinemaHelper;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Data
@@ -23,16 +25,16 @@ public class CinemaServiceImpl implements CinemaService {
     CinemaHelper cinemaHelper;
 
     @Override
-    public List<Cinema> getAllCinemas() {
+    public List<CinemaResponseDto> getAllCinemas() {
         List<Cinema> cinemas = cinemaRepository.findAll();
-        return cinemas;
+        return cinemas.stream().map(cinema -> new CinemaResponseDto(cinema)).collect(Collectors.toList());
     }
 
     @Override
-    public Cinema getCinema(Long cinemaId) {
+    public CinemaResponseDto getCinema(Long cinemaId) {
         cinemaHelper.checkCinema(cinemaId);
         Cinema cinema = cinemaHelper.getCinema(cinemaId);
-        return cinema;
+        return new CinemaResponseDto(cinema);
     }
 
     @Override

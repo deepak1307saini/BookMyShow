@@ -21,7 +21,7 @@ public class ReviewService {
 
     private final static String REVIEW_SYSTEM_URL = "http://localhost:8082/movies";
 
-    public List<ReviewResponseDto> getAllReviews(int movieId) {
+    public List<ReviewResponseDto> getAllReviews(long movieId) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ResponseEntity<ReviewResponseDto[]> response = restTemplate.getForEntity(url, ReviewResponseDto[].class);
         if (response.getBody() == null) {
@@ -30,19 +30,19 @@ public class ReviewService {
         return Arrays.asList(response.getBody());
     }
 
-    public ReviewResponseDto getReview(int movieId, String userEmail) {
-        String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews" + "/" + userEmail;
+    public ReviewResponseDto getReview(long movieId, long userId) {
+        String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews" + "/" + userId;
         ResponseEntity<ReviewResponseDto> response = restTemplate.getForEntity(url, ReviewResponseDto.class);
         return response.getBody();
     }
 
-    public ResponseDto addReview(int movieId, ReviewDto reviewDto) {
+    public ResponseDto addReview(long movieId, ReviewDto reviewDto) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ResponseEntity<ResponseDto> response = restTemplate.postForEntity(url, reviewDto,ResponseDto.class);
         return response.getBody();
     }
 
-    public ResponseDto editReview(int movieId, ReviewDto reviewDto) {
+    public ResponseDto editReview(long movieId, ReviewDto reviewDto) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ResponseEntity<ResponseDto> response = restTemplate.exchange(url,
                 HttpMethod.PUT,
@@ -51,10 +51,10 @@ public class ReviewService {
         return response.getBody();
     }
 
-    public ResponseDto deleteReview(int movieId, String email) {
+    public ResponseDto deleteReview(long movieId, long userId) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ReviewDto reviewDto = new ReviewDto();
-        reviewDto.setUserEmail(email);
+        reviewDto.setUserId(userId);
         ResponseEntity<ResponseDto> response = restTemplate.exchange(url,
                 HttpMethod.DELETE,
                 new HttpEntity<>(reviewDto),

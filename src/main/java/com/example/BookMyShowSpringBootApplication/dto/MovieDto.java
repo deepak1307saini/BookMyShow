@@ -3,7 +3,8 @@
  */
 package com.example.BookMyShowSpringBootApplication.dto;
 
-import java.time.LocalDate;
+
+import java.util.Date;
 import java.util.List;
 
 import com.example.BookMyShowSpringBootApplication.enums.CertificateType;
@@ -36,7 +37,7 @@ public class MovieDto {
     private CertificateType certificateType;
 
     @NotBlank
-    private LocalDate releaseDate;
+    private Date releaseDate;
 
     @NotBlank
     private Genre genre;

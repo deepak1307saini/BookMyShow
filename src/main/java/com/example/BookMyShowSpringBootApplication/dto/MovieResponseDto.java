@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class MovieResponseDto {
     private String name;
     private String description;
     private Language language;
-    private LocalDate releaseDate;
+    private Date releaseDate;
     private CertificateType certificateType;
     private Genre genre;
     private List<String> actors = new ArrayList<>();

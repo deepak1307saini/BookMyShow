@@ -57,4 +57,9 @@ public class MovieController {
     public ResponseDto deleteMovie(@PathVariable Long movieId) {
         return movieService.deleteMovie(movieId);
     }
+
+    @PutMapping("/{movieId}")
+    public ResponseDto updateMovie(@PathVariable long movieId,@RequestBody MovieDto movieDto){
+        return movieService.updateMovie(movieId,movieDto);
+    }
 }

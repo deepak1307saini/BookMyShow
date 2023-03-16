@@ -5,6 +5,7 @@ package com.example.BookMyShowSpringBootApplication.entity;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -40,7 +41,7 @@ public class Movie {
     private Language language;
 
     @Column(name = "release_date", columnDefinition = "DATE", nullable = false)
-    private LocalDate releaseDate;
+    private Date releaseDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

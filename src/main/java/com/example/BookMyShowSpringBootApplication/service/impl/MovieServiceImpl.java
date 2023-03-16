@@ -1,6 +1,4 @@
-/**
- *
- */
+
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.MovieDto;
@@ -15,12 +13,10 @@ import com.example.BookMyShowSpringBootApplication.repository.MovieRepository;
 import com.example.BookMyShowSpringBootApplication.service.MovieService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,12 +32,17 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     MovieHelper movieHelper;
 
+    @Autowired
+    KafkaTemplate<String, MovieDto> template;
+
     @Override
     public MovieResponseDto addMovie(MovieDto movieDto) {
         movieHelper.canAdd(movieDto);
         Movie movie = new Movie();
         movieHelper.mapMovieRequestToMovie(movieDto, movie);
         movieRepository.save(movie);
+        movieDto.setId(movie.getId());
+        template.send("movies","add",movieDto);
         return new MovieResponseDto(movie);
     }
 
@@ -79,12 +80,14 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public ResponseDto updateMovie(Long movieId, MovieDto movieRequestDTO) {
+    public ResponseDto updateMovie(Long movieId, MovieDto movieDto) {
         movieHelper.canUpdate(movieId);
 
         Movie movie = movieHelper.getMovie(movieId);
-        movieHelper.mapMovieRequestToMovie(movieRequestDTO, movie);
+        movieHelper.mapMovieRequestToMovie(movieDto, movie);
         movieRepository.save(movie);
+        movieDto.setId(movieId);
+        template.send("movies","update",movieDto);
         return new ResponseDto(true, String.format("movie %s updated successfully", movie.getName()));
     }
 

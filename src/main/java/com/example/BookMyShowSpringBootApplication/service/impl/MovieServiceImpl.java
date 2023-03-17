@@ -105,6 +105,7 @@ public class MovieServiceImpl implements MovieService {
     public ResponseDto deleteMovie(Long movieId) {
         movieHelper.canDelete(movieId);
         Movie movie = movieHelper.getMovie(movieId);
+        template.send("movies","delete",new MovieDto(movieId));
         movieRepository.delete(movie);
         return new ResponseDto(true, String.format("movie %s deleted successfully", movie.getName()));
     }

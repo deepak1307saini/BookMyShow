@@ -48,7 +48,7 @@ public class MovieController {
         return movieService.getMovie(movieId);
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<MovieResponseDto> getMovies() {
         return movieService.getMovies();
     }

@@ -60,6 +60,4 @@ public class Movie {
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private List<Show> shows = new ArrayList<>();
-
-
 }

@@ -6,6 +6,7 @@ import com.example.BookMyShowSpringBootApplication.enums.CertificateType;
 import com.example.BookMyShowSpringBootApplication.enums.Genre;
 import com.example.BookMyShowSpringBootApplication.enums.Language;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
+@NoArgsConstructor
 public class MovieResponseDto {
     private Long id;
     private String name;

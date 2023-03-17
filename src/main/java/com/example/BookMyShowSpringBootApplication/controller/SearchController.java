@@ -1,5 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.controller;
 
+import com.example.BookMyShowSpringBootApplication.dto.MovieResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.Movie;
 import com.example.BookMyShowSpringBootApplication.service.impl.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class SearchController {
     SearchService searchService;
 
     @GetMapping
-    public List<Movie> searchMovie(@PathVariable String keyword) {
+    public List<MovieResponseDto> searchMovie(@PathVariable String keyword) {
         return searchService.searchMovie(keyword);
     }
 }

@@ -24,25 +24,26 @@ import javax.validation.constraints.NotEmpty;
 public class MovieDto {
     private long id;
 
-    @NotBlank
     private String name;
 
-    @NotBlank
     private String description;
 
-    @NotBlank
+
     private Language language;
 
-    @NotBlank
+
     private CertificateType certificateType;
 
-    @NotBlank
+
     private Date releaseDate;
 
-    @NotBlank
     private Genre genre;
 
-    @NotEmpty
+
     private List<String> actorNames;
+
+    public MovieDto(long movieId){
+        this.id=movieId;
+    }
 
 }

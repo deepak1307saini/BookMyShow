@@ -16,10 +16,9 @@ import java.util.List;
 
 @Service
 public class ReviewService {
+    private final static String REVIEW_SYSTEM_URL = "http://localhost:8082/movies";
     @Autowired
     private RestTemplate restTemplate;
-
-    private final static String REVIEW_SYSTEM_URL = "http://localhost:8082/movies";
 
     public List<ReviewResponseDto> getAllReviews(long movieId) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
@@ -38,7 +37,7 @@ public class ReviewService {
 
     public ResponseDto addReview(long movieId, ReviewDto reviewDto) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
-        ResponseEntity<ResponseDto> response = restTemplate.postForEntity(url, reviewDto,ResponseDto.class);
+        ResponseEntity<ResponseDto> response = restTemplate.postForEntity(url, reviewDto, ResponseDto.class);
         return response.getBody();
     }
 

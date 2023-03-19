@@ -11,11 +11,8 @@ import java.util.stream.Collectors;
 public class CinemaResponseDto {
     private Long id;
     private String name;
-
     private String address;
-
     private CityDto city;
-
     private List<String> cinemaHalls = new ArrayList<>();
 
     public CinemaResponseDto(Cinema cinema) {

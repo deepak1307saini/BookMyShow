@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 import com.example.BookMyShowSpringBootApplication.enums.Genre;
 import com.example.BookMyShowSpringBootApplication.enums.Language;
@@ -34,6 +35,7 @@ public class Movie {
     @Length(min = 3)
     private String name;
 
+    @NotEmpty
     private String description;
 
     @Enumerated(EnumType.STRING)

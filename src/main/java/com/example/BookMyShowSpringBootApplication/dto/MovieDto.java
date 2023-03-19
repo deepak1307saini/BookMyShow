@@ -28,17 +28,13 @@ public class MovieDto {
 
     private String description;
 
-
     private Language language;
 
-
     private CertificateType certificateType;
-
 
     private Date releaseDate;
 
     private Genre genre;
-
 
     private List<String> actorNames;
 

@@ -7,9 +7,7 @@ import lombok.Data;
 public class CityDto {
 
     private String name;
-
     private String state;
-
     private String pinCode;
 
     public CityDto(City city) {

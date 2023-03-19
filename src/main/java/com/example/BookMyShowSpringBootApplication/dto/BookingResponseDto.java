@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.dto;
 import com.example.BookMyShowSpringBootApplication.entity.Booking;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 @Data
 public class BookingResponseDto {
 
+    @NotEmpty
     List<String> seatNo = new ArrayList<>();
     private int numberOfSeats;
     private int totalPrice;

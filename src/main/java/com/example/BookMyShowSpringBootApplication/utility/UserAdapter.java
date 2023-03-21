@@ -26,7 +26,7 @@ public class UserAdapter {
 
 	}
 
-	public static void upadateUser(User oldUser,User newUser){
+	public static void updateUser(User oldUser,User newUser){
 		oldUser.setName(newUser.getName());
 		oldUser.setLocalDateTime(newUser.getLocalDateTime());
 		oldUser.setPassword(newUser.getPassword());

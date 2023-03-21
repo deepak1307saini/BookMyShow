@@ -58,9 +58,9 @@ public class MovieHelper {
         movie.setName(movieDto.getName());
         movie.setDescription(movieDto.getDescription());
         movie.setReleaseDate(movieDto.getReleaseDate());
-        movie.setLanguage(movieDto.getLanguage());
-        movie.setGenre(movieDto.getGenre());
-        movie.setCertificateType(movieDto.getCertificateType());
+        movie.setLanguage(Language.valueOf(movieDto.getLanguage().toUpperCase()));
+        movie.setGenre(Genre.valueOf(movieDto.getGenre().toUpperCase()));
+        movie.setCertificateType(CertificateType.valueOf(movieDto.getCertificateType().toUpperCase()));
         movie.setActors(createActorSet(movieDto.getActorNames()));
     }
 
@@ -76,7 +76,10 @@ public class MovieHelper {
     }
 
     public void canAdd(MovieDto movieDto) {
-        if (movieRepository.existsByNameAndLanguage(movieDto.getName(), movieDto.getLanguage())) {
+        checkGenre(movieDto.getGenre());
+        checkLanguage(movieDto.getLanguage());
+        checkCertificateType(movieDto.getCertificateType());
+        if (movieRepository.existsByNameAndLanguage(movieDto.getName(), Language.valueOf(movieDto.getLanguage().toUpperCase()))){
             throw new DuplicateRecordException(String.format("Movie Already Exists with Name: " + movieDto.getName() + " in Language: " + movieDto.getLanguage()));
         }
     }
@@ -90,10 +93,6 @@ public class MovieHelper {
         return movieRepository.findById(movieId).get();
     }
 
-
-    public void canAdd(String genre) {
-        checkGenre(genre);
-    }
 
     public void canUpdate(Long movieId) {
         checkMovie(movieId);

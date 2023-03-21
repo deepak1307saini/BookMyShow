@@ -5,11 +5,22 @@ import com.example.BookMyShowSpringBootApplication.enums.SeatStatus;
 import com.example.BookMyShowSpringBootApplication.enums.SeatType;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Data
 public class ShowSeatDto {
+
+    @NotBlank
     private String seatNo;
+
+    @NotNull
     private SeatType seatType;
+
+    @NotBlank
     private int price;
+
+    @NotNull
     private SeatStatus seatStatus;
 
     public ShowSeatDto(ShowSeat showSeat) {

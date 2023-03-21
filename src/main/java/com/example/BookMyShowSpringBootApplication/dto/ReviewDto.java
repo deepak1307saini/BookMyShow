@@ -17,7 +17,7 @@ public class ReviewDto {
 
     @NotBlank
     private String comment;
-    @Max(10)
-    @Min(1)
-    private Integer movieRating;
+
+    @Min(1) @Max(10)
+    private int movieRating;
 }

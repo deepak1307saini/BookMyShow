@@ -5,9 +5,7 @@ package com.example.BookMyShowSpringBootApplication.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -27,10 +25,9 @@ public class ShowDto {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private Date endDateTime;
 
-    @NotNull
+    @Min(1)
     private Long movieId;
 
-    @NotNull
     @Positive
     private Integer price;
 }

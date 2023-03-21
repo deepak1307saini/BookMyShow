@@ -50,7 +50,7 @@ public class AuthServiceImpl implements AuthService {
         emailService.sendSimpleMail(GetEmailDetailInstance.getInstance(user.getEmail(), user.getOtp()));
 
         if (user1 != null) {
-            UserAdapter.upadateUser(user1,user);
+            UserAdapter.updateUser(user1,user);
             userRepository.save(user1);
         } else
             userRepository.save(user);

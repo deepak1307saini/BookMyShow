@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.service.impl;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ReviewDto;
 import com.example.BookMyShowSpringBootApplication.dto.ReviewResponseDto;
+import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,10 @@ public class ReviewService {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    UserRepository userRepository;
+
+
     public List<ReviewResponseDto> getAllReviews(long movieId) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ResponseEntity<ReviewResponseDto[]> response = restTemplate.getForEntity(url, ReviewResponseDto[].class);
@@ -36,6 +41,9 @@ public class ReviewService {
     }
 
     public ResponseDto addReview(long movieId, ReviewDto reviewDto) {
+        if (!userRepository.existsById(reviewDto.getUserId())){
+            return new ResponseDto(false,"User id not exist");
+        }
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ResponseEntity<ResponseDto> response = restTemplate.postForEntity(url, reviewDto, ResponseDto.class);
         return response.getBody();

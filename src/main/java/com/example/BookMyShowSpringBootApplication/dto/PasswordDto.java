@@ -13,6 +13,10 @@ import javax.validation.constraints.NotBlank;
 public class PasswordDto {
     @Email @NotBlank
     private String email;
+
+    @NotBlank
     private String oldPassword;
+
+    @NotBlank
     private String newPassword;
 }

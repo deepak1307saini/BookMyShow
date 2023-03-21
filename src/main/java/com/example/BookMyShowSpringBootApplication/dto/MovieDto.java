@@ -1,20 +1,15 @@
-/**
- *
- */
 package com.example.BookMyShowSpringBootApplication.dto;
 
 
 import java.util.Date;
 import java.util.List;
 
-import com.example.BookMyShowSpringBootApplication.enums.CertificateType;
-import com.example.BookMyShowSpringBootApplication.enums.Genre;
-import com.example.BookMyShowSpringBootApplication.enums.Language;
 
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
@@ -24,18 +19,25 @@ import javax.validation.constraints.NotEmpty;
 public class MovieDto {
     private long id;
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String description;
 
-    private Language language;
+    @NotBlank
+    private String language;
 
-    private CertificateType certificateType;
+    @NotBlank
+    private String certificateType;
 
+    @NotNull
     private Date releaseDate;
 
-    private Genre genre;
+    @NotBlank
+    private String genre;
 
+    @NotEmpty
     private List<String> actorNames;
 
     public MovieDto(long movieId){

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @RestController
 public class AuthController {
@@ -16,7 +17,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/register")
-    public ResponseDto signUp(@RequestBody UserDto userDto) {
+    public ResponseDto signUp(@RequestBody @Valid UserDto userDto) {
         return authService.signUp(userDto);
     }
 

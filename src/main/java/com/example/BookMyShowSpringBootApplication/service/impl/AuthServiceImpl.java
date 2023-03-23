@@ -2,6 +2,7 @@ package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.*;
 import com.example.BookMyShowSpringBootApplication.entity.User;
+import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
 import com.example.BookMyShowSpringBootApplication.service.AuthService;
 import com.example.BookMyShowSpringBootApplication.service.EmailService;
@@ -11,11 +12,21 @@ import com.example.BookMyShowSpringBootApplication.utility.GetEmailDetailInstanc
 import com.example.BookMyShowSpringBootApplication.utility.UserAdapter;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.validation.ConstraintViolationException;
 import java.util.Random;
 import java.util.UUID;
+
+import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Service
 @Data
@@ -31,6 +42,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     @Override
     public ResponseDto signUp(UserDto userDto) {
@@ -51,9 +65,16 @@ public class AuthServiceImpl implements AuthService {
 
         if (user1 != null) {
             UserAdapter.updateUser(user1,user);
-            userRepository.save(user1);
+            try{userRepository.save(user1);}
+            catch (Exception e){
+                throw new DuplicateRecordException(String.format("Key (username)=(%s) already exists",user1.getUsername()));
+            }
+
         } else
-            userRepository.save(user);
+            try{userRepository.save(user);}
+            catch (Exception e){
+                throw new DuplicateRecordException(String.format("Key (username)=(%s) already exists",user.getUsername()));
+            }
 
         return new ResponseDto(true, String.format("OTP sent to email : %s", userDto.getEmail()));
     }
@@ -75,7 +96,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public ResponseDto login(LoginRequestDto loginDto) {
+    public ResponseDto login(HttpServletRequest req,LoginRequestDto loginDto) {
         User user = userRepository.findByEmail(loginDto.getEmail());
 
         if (user == null && !user.getActiveStatus()) {
@@ -84,7 +105,13 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
             return new ResponseDto(false, "invalid credentials!");
         }
-        String token = UUID.randomUUID().toString();
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
+                loginDto.getPassword()));
+        SecurityContext sc = SecurityContextHolder.getContext();
+        sc.setAuthentication(authentication);
+        HttpSession session = req.getSession(true);
+        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
         return new ResponseDto(true, String.format("User name = %s ," +
                                 "Email = %s ," +
                                 "Name = %s", user.getUsername(), user.getEmail(), user.getName()));

@@ -1,5 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.config;
 
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
@@ -37,15 +38,12 @@ public class RestTemplateResponseErrorHandler implements ResponseErrorHandler {
             // handle SERVER_ERROR
         } else if (httpResponse.getStatusCode()
                 .series() == HttpStatus.Series.CLIENT_ERROR) {
-            // handle CLIENT_ERROR
             if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
-                if (httpResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
-                    throw new EntityNotFoundException(json.getString("error"));
-                } else {
-                    throw new IllegalArgumentException(json.getString("error"));
-                }
+                    throw new NotFoundException((json.getJSONArray("details")).toString());
+            } else {
+                throw new IllegalArgumentException(json.getString("message"));
             }
-            }
+        }
     }
     protected byte[] getResponseBody(ClientHttpResponse response) {
         try {

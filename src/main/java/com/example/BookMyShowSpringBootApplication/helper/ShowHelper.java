@@ -4,6 +4,7 @@ import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowResponseDto;
 import com.example.BookMyShowSpringBootApplication.entity.*;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
 import com.example.BookMyShowSpringBootApplication.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class ShowHelper {
         checkMovie(movieId);
         Movie movie = getMovie(movieId);
         if (!showRepository.existsByIdAndMovie(showId, movie))
-            throw new EntityNotFoundException("Invalid show id");
+            throw new NotFoundException("Invalid show id");
     }
 
     public Show getShow(Long showId) {
@@ -126,7 +127,7 @@ public class ShowHelper {
         checkCinemaHall(cinemaId, cinemaHallName);
         CinemaHall cinemaHall = getCinemaHall(cinemaId, cinemaHallName);
         if (!showRepository.existsByIdAndCinemaHall(showId, cinemaHall))
-            throw new EntityNotFoundException("Invalid show id");
+            throw new NotFoundException("Invalid show id");
     }
 
     public void canDelete(Long cinemaId, String cinemaHallName, Long showId) {

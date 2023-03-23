@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.persistence.EntityNotFoundException;
 
-//@SuppressWarnings({"unchecked","rawtypes"})
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
@@ -29,8 +29,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public final ResponseEntity<Object> handleNotFoundException(EntityNotFoundException err) {
+    @ExceptionHandler(NotFoundException.class)
+    public final ResponseEntity<Object> handleNotFoundException(NotFoundException err) {
         List<String> details = new ArrayList<>();
         details.add(err.getMessage());
         ErrorResponse error = new ErrorResponse("Record Not Found", details);

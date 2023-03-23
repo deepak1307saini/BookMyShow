@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,28 +27,29 @@ public class ReviewController {
         return new ResponseEntity<>(reviewResponseDtoS, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<?> getReview(@PathVariable long movieId, @PathVariable long userId) {
-        ReviewResponseDto reviewResponseDto = reviewService.getReview(movieId, userId);
+    @GetMapping("/{userEmail}")
+    public ResponseEntity<?> getReview(@PathVariable long movieId,@PathVariable String userEmail) {
+        ReviewResponseDto reviewResponseDto = reviewService.getReview(movieId, userEmail);
         return new ResponseEntity<>(reviewResponseDto, HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<?> addReview(@PathVariable long movieId,
-                                       @Valid @RequestBody ReviewDto reviewDto) {
-        ResponseDto responseDto = reviewService.addReview(movieId, reviewDto);
-        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+                                       @Valid @RequestBody ReviewDto reviewDto, Principal principal) {
+        reviewDto.setUserEmail(principal.getName());
+        return new ResponseEntity<>(reviewService.addReview(movieId, reviewDto), HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<?> editReview(@PathVariable long movieId, @Valid @RequestBody ReviewDto reviewDto) {
+    public ResponseEntity<?> editReview(@PathVariable long movieId, @Valid @RequestBody ReviewDto reviewDto,Principal principal) {
+        reviewDto.setUserEmail(principal.getName());
         ResponseDto responseDto = reviewService.editReview(movieId, reviewDto);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteReview(@PathVariable long movieId, @PathVariable long userId) {
-        ResponseDto responseDto = reviewService.deleteReview(movieId, userId);
+    @DeleteMapping
+    public ResponseEntity<?> deleteReview(@PathVariable long movieId, Principal principal) {
+        ResponseDto responseDto = reviewService.deleteReview(movieId, principal.getName());
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 

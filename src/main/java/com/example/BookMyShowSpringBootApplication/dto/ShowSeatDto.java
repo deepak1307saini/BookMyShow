@@ -17,7 +17,6 @@ public class ShowSeatDto {
     @NotNull
     private SeatType seatType;
 
-    @NotBlank
     private int price;
 
     @NotNull

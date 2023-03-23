@@ -8,11 +8,11 @@ import com.example.BookMyShowSpringBootApplication.entity.Booking;
 import java.util.List;
 
 public interface BookingService {
-    List<BookingResponseDto> getAllBookings(Long userId);
+    List<BookingResponseDto> getAllBookings(String email);
 
-    BookingResponseDto getBooking(Long userId, Long bookingId);
+    BookingResponseDto getBooking(String email, Long bookingId);
 
-    ResponseDto bookShow(Long userId, Long movieId, Long showId, BookingDto bookingDto);
+    ResponseDto bookShow(String email, Long movieId, Long showId, BookingDto bookingDto);
 
-    ResponseDto cancelBooking(Long userId, Long bookingId);
+    ResponseDto cancelBooking(String email, Long bookingId);
 }

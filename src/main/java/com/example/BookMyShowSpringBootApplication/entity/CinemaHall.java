@@ -19,7 +19,7 @@ import java.util.List;
 @Entity
 public class CinemaHall {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column(name = "name", nullable = false)

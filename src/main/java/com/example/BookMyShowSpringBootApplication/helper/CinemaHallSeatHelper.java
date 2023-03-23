@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.helper;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHallSeat;
 import com.example.BookMyShowSpringBootApplication.enums.SeatType;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,7 +34,7 @@ public class CinemaHallSeatHelper {
 
         CinemaHall cinemaHall = getCinemaHall(cinemaId, cinemaHallName);
         if (!cinemaHallSeatRepository.existsByCinemaHallAndSeatNo(cinemaHall, seatNo))
-            throw new EntityNotFoundException("invalid seat no");
+            throw new NotFoundException("invalid seat no");
     }
 
     public CinemaHallSeat getCinemaHallSeat(Long cinemaId, String cinemaHallName, String seatNo) {

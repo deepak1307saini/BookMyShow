@@ -3,6 +3,8 @@ package com.example.BookMyShowSpringBootApplication.helper;
 import com.example.BookMyShowSpringBootApplication.dto.CinemaDto;
 import com.example.BookMyShowSpringBootApplication.entity.Cinema;
 import com.example.BookMyShowSpringBootApplication.entity.City;
+import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaRepository;
 import com.example.BookMyShowSpringBootApplication.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,7 @@ public class CinemaHelper {
 
     public void checkCinema(Long id) {
         if (!cinemaRepository.existsById(id))
-            throw new EntityNotFoundException("Invalid Cinema id");
+            throw new NotFoundException("Invalid Cinema id");
     }
 
     public Cinema getCinema(Long cinemaId) {
@@ -45,5 +47,10 @@ public class CinemaHelper {
 
     public void canDelete(Long theatreId) {
         checkCinema(theatreId);
+    }
+
+    public void canAdd(String name){
+        if (cinemaRepository.existsByName(name))
+            throw new DuplicateRecordException(String.format("Cinema with Name : %s already exists.",name));
     }
 }

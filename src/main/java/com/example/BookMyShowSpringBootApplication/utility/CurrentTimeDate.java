@@ -9,7 +9,7 @@ public class CurrentTimeDate {
         LocalDateTime now=LocalDateTime.now();
         long diff = SECONDS.between(before,now);
         System.out.println(diff);
-        if (diff>60)
+        if (diff>180)
             return true;
         return false;
     }

@@ -1,8 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.MovieResponseDto;
-import com.example.BookMyShowSpringBootApplication.entity.Movie;
-import com.example.BookMyShowSpringBootApplication.helper.SearchHelper;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

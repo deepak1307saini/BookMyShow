@@ -39,6 +39,7 @@ public class CinemaServiceImpl implements CinemaService {
 
     @Override
     public ResponseDto addCinema(CinemaDto cinemaDto) {
+        cinemaHelper.canAdd(cinemaDto.getName());
         Cinema cinema = new Cinema();
         cinemaHelper.mapCinemaToCinema(cinemaDto, cinema);
         cinemaRepository.save(cinema);

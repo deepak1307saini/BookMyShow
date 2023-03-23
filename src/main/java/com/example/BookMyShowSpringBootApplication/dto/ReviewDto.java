@@ -12,12 +12,12 @@ import javax.validation.constraints.*;
 
 public class ReviewDto {
 
-    @Min(1)
-    private long userId;
-
+    @Email
+    private String userEmail;
     @NotBlank
     private String comment;
 
-    @Min(1) @Max(10)
+    @Min(value = 1)
+    @Max(value = 10)
     private int movieRating;
 }

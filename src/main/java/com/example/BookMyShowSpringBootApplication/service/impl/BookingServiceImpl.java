@@ -33,23 +33,23 @@ public class BookingServiceImpl implements BookingService {
     BookingHelper bookingHelper;
 
     @Override
-    public List<BookingResponseDto> getAllBookings(Long userId) {
-        User user = bookingHelper.getUser(userId);
+    public List<BookingResponseDto> getAllBookings(String email) {
+        User user = bookingHelper.getUser(email);
         return bookingRepository.findByUser(user).stream().map(booking -> new BookingResponseDto(booking)).collect(Collectors.toList());
     }
 
     @Override
-    public BookingResponseDto getBooking(Long userId, Long bookingId) {
-        bookingHelper.checkBooking(userId, bookingId);
+    public BookingResponseDto getBooking(String email, Long bookingId) {
+        bookingHelper.checkBooking(email, bookingId);
         Booking booking = bookingRepository.findById(bookingId).get();
         return new BookingResponseDto(booking);
     }
 
     @Override
-    public ResponseDto bookShow(Long userId, Long movieId, Long showId, BookingDto bookingDto) {
+    public ResponseDto bookShow(String email, Long movieId, Long showId, BookingDto bookingDto) {
         bookingHelper.canBook(movieId, showId, bookingDto.getSeatNumbers());
 
-        User user = bookingHelper.getUser(userId);
+        User user = bookingHelper.getUser(email);
         Show show = bookingHelper.getShow(showId);
 
         Booking booking = new Booking();
@@ -74,8 +74,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public ResponseDto cancelBooking(Long userId, Long bookingId) {
-        bookingHelper.canCancel(userId, bookingId);
+    public ResponseDto cancelBooking(String email, Long bookingId) {
+        bookingHelper.canCancel(email, bookingId);
 
         Booking booking = bookingRepository.findById(bookingId).get();
         booking.getShowSeats()

@@ -4,6 +4,7 @@ import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ReviewDto;
 import com.example.BookMyShowSpringBootApplication.dto.ReviewResponseDto;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@Data
 public class ReviewService {
     private final static String REVIEW_SYSTEM_URL = "http://localhost:8082/movies";
     @Autowired
@@ -34,14 +36,14 @@ public class ReviewService {
         return Arrays.asList(response.getBody());
     }
 
-    public ReviewResponseDto getReview(long movieId, long userId) {
-        String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews" + "/" + userId;
+    public ReviewResponseDto getReview(long movieId, String email) {
+        String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews" + "/" + email;
         ResponseEntity<ReviewResponseDto> response = restTemplate.getForEntity(url, ReviewResponseDto.class);
         return response.getBody();
     }
 
     public ResponseDto addReview(long movieId, ReviewDto reviewDto) {
-        if (!userRepository.existsById(reviewDto.getUserId())){
+        if (!userRepository.existsByEmail(reviewDto.getUserEmail())){
             return new ResponseDto(false,"User id not exist");
         }
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
@@ -58,10 +60,10 @@ public class ReviewService {
         return response.getBody();
     }
 
-    public ResponseDto deleteReview(long movieId, long userId) {
+    public ResponseDto deleteReview(long movieId, String email) {
         String url = REVIEW_SYSTEM_URL + "/" + movieId + "/reviews";
         ReviewDto reviewDto = new ReviewDto();
-        reviewDto.setUserId(userId);
+        reviewDto.setUserEmail(email);
         ResponseEntity<ResponseDto> response = restTemplate.exchange(url,
                 HttpMethod.DELETE,
                 new HttpEntity<>(reviewDto),

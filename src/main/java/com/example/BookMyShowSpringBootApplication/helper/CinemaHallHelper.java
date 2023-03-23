@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.helper;
 import com.example.BookMyShowSpringBootApplication.entity.Cinema;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHallSeat;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallRepository;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaRepository;
@@ -36,7 +37,7 @@ public class CinemaHallHelper {
         checkCinema(cinemaId);
         Cinema cinema = getCinema(cinemaId);
         if (!cinemaHallRepository.existsByNameAndCinema(cinemaHallName, cinema))
-            throw new EntityNotFoundException("Invalid CinemaHall no");
+            throw new NotFoundException("Invalid CinemaHall no");
     }
 
     public CinemaHall getCinemaHall(Long cinemaId, String cinemaHallName) {

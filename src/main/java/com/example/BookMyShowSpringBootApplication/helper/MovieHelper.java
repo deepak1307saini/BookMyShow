@@ -7,6 +7,7 @@ import com.example.BookMyShowSpringBootApplication.entity.Movie;
 import com.example.BookMyShowSpringBootApplication.enums.CertificateType;
 import com.example.BookMyShowSpringBootApplication.enums.Genre;
 import com.example.BookMyShowSpringBootApplication.enums.Language;
+import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.ActorRepository;
 import com.example.BookMyShowSpringBootApplication.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,7 +87,7 @@ public class MovieHelper {
 
     public void checkMovie(Long id) {
         if (!movieRepository.existsById(id))
-            throw new EntityNotFoundException("invalid movie id");
+            throw new NotFoundException("invalid movie id");
     }
 
     public Movie getMovie(Long movieId) {

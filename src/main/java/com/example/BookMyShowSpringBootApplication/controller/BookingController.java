@@ -8,33 +8,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("user/{userId}")
+@RequestMapping("")
 public class BookingController {
 
     @Autowired
     BookingService bookingService;
 
     @GetMapping("/bookings")
-    List<BookingResponseDto> getAllBookings(@PathVariable Long userId) {
-        return bookingService.getAllBookings(userId);
+    List<BookingResponseDto> getAllBookings(Principal principal) {
+        return bookingService.getAllBookings(principal.getName());
     }
 
     @GetMapping("/bookings/{bookingId}")
-    BookingResponseDto getBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
-        return bookingService.getBooking(userId, bookingId);
+    BookingResponseDto getBooking(Principal principal, @PathVariable Long bookingId) {
+        return bookingService.getBooking(principal.getName(), bookingId);
     }
 
     @PostMapping("/movies/{movieId}/shows/{showId}/book")
-    ResponseDto bookShow(@PathVariable Long userId, @PathVariable Long movieId, @PathVariable Long showId,
+    ResponseDto bookShow(Principal principal, @PathVariable Long movieId, @PathVariable Long showId,
                          @Valid @RequestBody BookingDto bookingDto) {
-        return bookingService.bookShow(userId, movieId, showId, bookingDto);
+        return bookingService.bookShow(principal.getName(), movieId, showId, bookingDto);
     }
 
     @DeleteMapping("/bookings/{bookingId}")
-    ResponseDto cancelBooking(@PathVariable Long userId, @PathVariable Long bookingId) {
-        return bookingService.cancelBooking(userId, bookingId);
+    ResponseDto cancelBooking(Principal principal, @PathVariable Long bookingId) {
+        return bookingService.cancelBooking(principal.getName(), bookingId);
     }
 }

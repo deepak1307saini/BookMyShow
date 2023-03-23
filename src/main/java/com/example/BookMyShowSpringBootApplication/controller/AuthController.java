@@ -3,13 +3,14 @@ package com.example.BookMyShowSpringBootApplication.controller;
 import com.example.BookMyShowSpringBootApplication.dto.*;
 import com.example.BookMyShowSpringBootApplication.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 
 @RestController
 public class AuthController {
@@ -27,8 +28,8 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseDto login(@RequestBody LoginRequestDto loginRequestDto) {
-        return authService.login(loginRequestDto);
+    public ResponseEntity<?> login(HttpServletRequest req, @RequestBody LoginRequestDto loginRequestDto) {
+        return new ResponseEntity<>(authService.login(req,loginRequestDto), HttpStatus.OK);
     }
 
     @PostMapping("/changePassword")
@@ -53,5 +54,10 @@ public class AuthController {
                 ":" +
                 request.getServerPort() +
                 request.getContextPath();
+    }
+
+    @GetMapping("/")
+    public String getUser(Principal principal){
+        return "Welcome " + principal.getName();
     }
 }

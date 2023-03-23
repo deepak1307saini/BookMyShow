@@ -14,6 +14,5 @@ public class OtpDTO {
     @NotBlank
     private String username;
 
-    @NotBlank
     private Long otp;
 }

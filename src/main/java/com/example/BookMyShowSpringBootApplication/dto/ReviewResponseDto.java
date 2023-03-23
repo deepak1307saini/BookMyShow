@@ -11,7 +11,7 @@ import javax.validation.constraints.Max;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewResponseDto {
-    private long userId;
+    private String userEmail;
     private String comment;
     private Integer movieRating;
 }

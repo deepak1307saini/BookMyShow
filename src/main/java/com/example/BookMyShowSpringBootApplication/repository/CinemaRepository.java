@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CinemaRepository extends JpaRepository<Cinema,Long> {
 
+    boolean existsByName(String name);
 }

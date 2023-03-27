@@ -18,7 +18,7 @@ import lombok.*;
 @Entity
 public class ShowSeat {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private int price;

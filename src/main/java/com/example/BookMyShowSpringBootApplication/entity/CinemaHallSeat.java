@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Builder
 public class CinemaHallSeat {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(nullable = false)

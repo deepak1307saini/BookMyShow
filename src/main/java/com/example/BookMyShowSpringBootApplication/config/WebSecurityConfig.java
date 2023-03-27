@@ -2,9 +2,6 @@ package com.example.BookMyShowSpringBootApplication.config;
 
 import com.example.BookMyShowSpringBootApplication.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -18,12 +15,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig{
-    private final String[] WHITE_LIST_URLS={
+    private final static String COOKIE_NAME = "LOGIN-AUTH";
+    private final String[] WHITE_LIST_URLS = {
             "/register",
             "/login",
             "/verifyRegistration",
@@ -32,10 +34,11 @@ public class WebSecurityConfig{
             "/verify"
 
     };
-    private final static String COOKIE_NAME = "JSESSIONID";
 
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
+    @Autowired
+    private DataSource dataSource;
 
     @Bean
     public AuthenticationManager authManager(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
@@ -44,8 +47,9 @@ public class WebSecurityConfig{
         authProvider.setUserDetailsService(userDetailsService);
         return new ProviderManager(authProvider);
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(11);
     }
     @Bean
@@ -59,6 +63,7 @@ public class WebSecurityConfig{
                         .antMatchers(WHITE_LIST_URLS).permitAll()
                         .anyRequest().authenticated()
                 )
+
                 .userDetailsService(userDetailsServiceImpl)
                 .headers(headers -> headers.frameOptions().sameOrigin())
                 .logout(logout -> logout
@@ -69,5 +74,13 @@ public class WebSecurityConfig{
 
         return http.build();
     }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepo = new JdbcTokenRepositoryImpl();
+        tokenRepo.setDataSource(dataSource);
+        return tokenRepo;
+    }
+
 
 }

@@ -2,15 +2,12 @@ package com.example.BookMyShowSpringBootApplication.helper;
 
 import com.example.BookMyShowSpringBootApplication.entity.Cinema;
 import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
-import com.example.BookMyShowSpringBootApplication.entity.CinemaHallSeat;
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallRepository;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
-import com.example.BookMyShowSpringBootApplication.repository.CinemaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
 import java.util.Optional;
 

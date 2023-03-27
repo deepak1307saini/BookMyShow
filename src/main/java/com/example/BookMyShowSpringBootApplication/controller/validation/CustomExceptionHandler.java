@@ -1,9 +1,6 @@
 package com.example.BookMyShowSpringBootApplication.controller.validation;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +14,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {

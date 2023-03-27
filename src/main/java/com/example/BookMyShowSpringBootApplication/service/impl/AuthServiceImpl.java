@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.validation.ConstraintViolationException;
 import java.util.Random;
 import java.util.UUID;
 
@@ -106,15 +105,17 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseDto(false, "invalid credentials!");
         }
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
-                loginDto.getPassword()));
+        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
+                loginDto.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authReq);
         SecurityContext sc = SecurityContextHolder.getContext();
         sc.setAuthentication(authentication);
         HttpSession session = req.getSession(true);
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+
         return new ResponseDto(true, String.format("User name = %s ," +
-                                "Email = %s ," +
-                                "Name = %s", user.getUsername(), user.getEmail(), user.getName()));
+                "Email = %s ," +
+                "Name = %s", user.getUsername(), user.getEmail(), user.getName()));
     }
 
     @Override

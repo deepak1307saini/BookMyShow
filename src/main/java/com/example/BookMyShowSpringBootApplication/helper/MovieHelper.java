@@ -7,14 +7,13 @@ import com.example.BookMyShowSpringBootApplication.entity.Movie;
 import com.example.BookMyShowSpringBootApplication.enums.CertificateType;
 import com.example.BookMyShowSpringBootApplication.enums.Genre;
 import com.example.BookMyShowSpringBootApplication.enums.Language;
+import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.ActorRepository;
 import com.example.BookMyShowSpringBootApplication.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;

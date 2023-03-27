@@ -3,14 +3,16 @@ package com.example.BookMyShowSpringBootApplication.helper;
 import com.example.BookMyShowSpringBootApplication.dto.ResponseDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowDto;
 import com.example.BookMyShowSpringBootApplication.dto.ShowResponseDto;
-import com.example.BookMyShowSpringBootApplication.entity.*;
+import com.example.BookMyShowSpringBootApplication.entity.CinemaHall;
+import com.example.BookMyShowSpringBootApplication.entity.Movie;
+import com.example.BookMyShowSpringBootApplication.entity.Show;
+import com.example.BookMyShowSpringBootApplication.entity.ShowSeat;
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
 import com.example.BookMyShowSpringBootApplication.repository.CinemaHallSeatRepository;
 import com.example.BookMyShowSpringBootApplication.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

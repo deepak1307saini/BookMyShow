@@ -10,7 +10,6 @@ import com.example.BookMyShowSpringBootApplication.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Component

@@ -1,14 +1,13 @@
 package com.example.BookMyShowSpringBootApplication.config;
 
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.client.ResponseErrorHandler;
-import org.json.JSONObject;
-import javax.persistence.EntityNotFoundException;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 

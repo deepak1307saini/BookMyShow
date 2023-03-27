@@ -7,9 +7,7 @@ import com.example.BookMyShowSpringBootApplication.enums.Genre;
 import com.example.BookMyShowSpringBootApplication.enums.Language;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -5,7 +5,6 @@ import com.example.BookMyShowSpringBootApplication.entity.Token;
 import com.example.BookMyShowSpringBootApplication.entity.User;
 import com.example.BookMyShowSpringBootApplication.entity.UserDetailsImpl;
 import com.example.BookMyShowSpringBootApplication.enums.TokenType;
-import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.helper.AuthHelper;
 import com.example.BookMyShowSpringBootApplication.repository.TokenRepository;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
@@ -15,25 +14,14 @@ import com.example.BookMyShowSpringBootApplication.service.UserService;
 import com.example.BookMyShowSpringBootApplication.utility.CurrentTimeDate;
 import com.example.BookMyShowSpringBootApplication.utility.GetEmailDetailInstance;
 import com.example.BookMyShowSpringBootApplication.utility.UserAdapter;
-import lombok.Data;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 import java.util.UUID;
-
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -175,5 +163,10 @@ public class AuthServiceImpl implements AuthService {
         return new ResponseDto(true, "password changed successfully");
 
 
+    }
+
+    @Override
+    public void LogoutUser(String userEmail){
+        revokeAllUserTokens(userEmail);
     }
 }

@@ -23,4 +23,5 @@ public interface AuthService {
     public void revokeAllUserTokens(String userEmail);
 
 
+    void LogoutUser(String userEmail);
 }

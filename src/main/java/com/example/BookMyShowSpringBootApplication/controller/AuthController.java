@@ -60,7 +60,4 @@ public class AuthController {
         return "Welcome " + principal.getName();
     }
 
-
-
-
 }

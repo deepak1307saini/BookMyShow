@@ -2,7 +2,9 @@ package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.*;
 import com.example.BookMyShowSpringBootApplication.entity.User;
+import com.example.BookMyShowSpringBootApplication.entity.UserDetailsImpl;
 import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
+import com.example.BookMyShowSpringBootApplication.helper.AuthHelper;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
 import com.example.BookMyShowSpringBootApplication.service.AuthService;
 import com.example.BookMyShowSpringBootApplication.service.EmailService;
@@ -11,6 +13,7 @@ import com.example.BookMyShowSpringBootApplication.utility.CurrentTimeDate;
 import com.example.BookMyShowSpringBootApplication.utility.GetEmailDetailInstance;
 import com.example.BookMyShowSpringBootApplication.utility.UserAdapter;
 import lombok.Data;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,37 +46,22 @@ public class AuthServiceImpl implements AuthService {
     private UserService userService;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    JwtService jwtService;
+
+    @Autowired
+    AuthHelper authHelper;
 
     @Override
     public ResponseDto signUp(UserDto userDto) {
-        User user1 = userService.getUserByEmail(userDto.getEmail());
+        User user1 = authHelper.userByEmail(userDto.getEmail());
         if (user1 != null && user1.getActiveStatus()) {
             return new ResponseDto(false, "User already exists");
         }
-
         User user= UserAdapter.toEntity(userDto,passwordEncoder.encode(userDto.getPassword()));
-
-        //generate
-        Random rand = new Random();
-        Long OTP = (long) (rand.nextInt(9000) + 1000);
-        user.setOtp(OTP);
-
         // send mail
         emailService.sendSimpleMail(GetEmailDetailInstance.getInstance(user.getEmail(), user.getOtp()));
 
-        if (user1 != null) {
-            UserAdapter.updateUser(user1,user);
-            try{userRepository.save(user1);}
-            catch (Exception e){
-                throw new DuplicateRecordException(String.format("Key (username)=(%s) already exists",user1.getUsername()));
-            }
-
-        } else
-            try{userRepository.save(user);}
-            catch (Exception e){
-                throw new DuplicateRecordException(String.format("Key (username)=(%s) already exists",user.getUsername()));
-            }
+        authHelper.addUser(user,user1);
 
         return new ResponseDto(true, String.format("OTP sent to email : %s", userDto.getEmail()));
     }
@@ -96,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseDto login(HttpServletRequest req,LoginRequestDto loginDto) {
-        User user = userRepository.findByEmail(loginDto.getEmail());
+        User user = authHelper.userByEmail(loginDto.getEmail());
 
         if (user == null && !user.getActiveStatus()) {
             return new ResponseDto(false, "email not registered!");
@@ -105,17 +93,10 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseDto(false, "invalid credentials!");
         }
 
-        UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(loginDto.getEmail(),
-                loginDto.getPassword());
-        Authentication authentication = authenticationManager.authenticate(authReq);
-        SecurityContext sc = SecurityContextHolder.getContext();
-        sc.setAuthentication(authentication);
-        HttpSession session = req.getSession(true);
-        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
-
+        var jwtToken = jwtService.generateToken(new UserDetailsImpl(user));
         return new ResponseDto(true, String.format("User name = %s ," +
                 "Email = %s ," +
-                "Name = %s", user.getUsername(), user.getEmail(), user.getName()));
+                "Name = %s ,"+"\ntoken = %s", user.getUsername(), user.getEmail(), user.getName(),jwtToken));
     }
 
     @Override

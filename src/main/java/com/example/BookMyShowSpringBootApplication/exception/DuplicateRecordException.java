@@ -5,11 +5,6 @@ package com.example.BookMyShowSpringBootApplication.exception;
 
 import lombok.Getter;
 
-/**
- * @author naveen
- *
- * @date 05-Sep-2019
- */
 @Getter
 public class DuplicateRecordException extends RuntimeException {
 

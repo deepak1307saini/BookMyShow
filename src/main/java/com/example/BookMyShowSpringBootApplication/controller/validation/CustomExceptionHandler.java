@@ -3,6 +3,7 @@ package com.example.BookMyShowSpringBootApplication.controller.validation;
 
 import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.exception.NotFoundException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -42,7 +42,7 @@ public class MovieController {
     }
 
     @GetMapping(params = "language")
-    public List<MovieResponseDto> getByGenre(@RequestParam Language language) {
+    public List<MovieResponseDto> getByLanguage(@RequestParam Language language) {
         return movieService.getByLanguage(language);
     }
 

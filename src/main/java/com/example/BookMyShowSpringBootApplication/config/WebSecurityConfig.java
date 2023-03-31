@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -29,7 +31,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig{
-    private final static String COOKIE_NAME = "LOGIN-AUTH";
     private final String[] WHITE_LIST_URLS = {
             "/register",
             "/login",
@@ -61,6 +62,7 @@ public class WebSecurityConfig{
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         return http.build();
     }

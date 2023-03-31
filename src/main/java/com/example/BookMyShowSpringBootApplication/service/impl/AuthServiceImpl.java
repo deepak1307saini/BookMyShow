@@ -1,10 +1,13 @@
 package com.example.BookMyShowSpringBootApplication.service.impl;
 
 import com.example.BookMyShowSpringBootApplication.dto.*;
+import com.example.BookMyShowSpringBootApplication.entity.Token;
 import com.example.BookMyShowSpringBootApplication.entity.User;
 import com.example.BookMyShowSpringBootApplication.entity.UserDetailsImpl;
+import com.example.BookMyShowSpringBootApplication.enums.TokenType;
 import com.example.BookMyShowSpringBootApplication.exception.DuplicateRecordException;
 import com.example.BookMyShowSpringBootApplication.helper.AuthHelper;
+import com.example.BookMyShowSpringBootApplication.repository.TokenRepository;
 import com.example.BookMyShowSpringBootApplication.repository.UserRepository;
 import com.example.BookMyShowSpringBootApplication.service.AuthService;
 import com.example.BookMyShowSpringBootApplication.service.EmailService;
@@ -25,13 +28,14 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
 
 @Service
-@Data
 public class AuthServiceImpl implements AuthService {
     @Autowired
     private EmailService emailService;
@@ -50,6 +54,10 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     AuthHelper authHelper;
+
+    @Autowired
+    private TokenRepository tokenRepository;
+
 
     @Override
     public ResponseDto signUp(UserDto userDto) {
@@ -93,10 +101,37 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseDto(false, "invalid credentials!");
         }
 
+
         var jwtToken = jwtService.generateToken(new UserDetailsImpl(user));
+         revokeAllUserTokens(user.getEmail());
+        saveUserToken(user,jwtToken);
         return new ResponseDto(true, String.format("User name = %s ," +
                 "Email = %s ," +
                 "Name = %s ,"+"\ntoken = %s", user.getUsername(), user.getEmail(), user.getName(),jwtToken));
+    }
+
+
+     private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .userEmail(user.getEmail())
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    @Override
+    public void revokeAllUserTokens(String userEmail) {
+        List<Token> validUserTokens = tokenRepository.findAllByUserEmail(userEmail);
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
     }
 
     @Override

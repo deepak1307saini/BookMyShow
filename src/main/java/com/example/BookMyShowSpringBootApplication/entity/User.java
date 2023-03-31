@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -37,4 +38,6 @@ public class User {
     private Long otp;
     private Boolean activeStatus;
     private LocalDateTime localDateTime;
+
+
 }

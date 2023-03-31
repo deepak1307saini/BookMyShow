@@ -59,4 +59,8 @@ public class AuthController {
     public String getUser(Principal principal){
         return "Welcome " + principal.getName();
     }
+
+
+
+
 }

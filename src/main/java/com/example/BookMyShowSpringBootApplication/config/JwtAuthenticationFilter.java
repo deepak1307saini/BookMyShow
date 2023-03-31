@@ -1,9 +1,11 @@
 package com.example.BookMyShowSpringBootApplication.config;
 
+import com.example.BookMyShowSpringBootApplication.repository.TokenRepository;
 import com.example.BookMyShowSpringBootApplication.service.impl.JwtService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.var;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +31,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
     private final UserDetailsService userDetailsService;
+
+    private final TokenRepository tokenRepository;
+
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
@@ -60,7 +65,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
          if (userEmail!=null && SecurityContextHolder.getContext().getAuthentication()==null){
              UserDetails userDetails=this.userDetailsService.loadUserByUsername(userEmail);
 
-             if (jwtService.isTokenValid(jwt,userDetails)){
+             var isTokenValid = tokenRepository.findByToken(jwt)
+                     .map(t -> !t.isExpired() && !t.isRevoked())
+                     .orElse(false);
+             if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                  UsernamePasswordAuthenticationToken authToken=new UsernamePasswordAuthenticationToken(
                          userDetails,
                          null,
